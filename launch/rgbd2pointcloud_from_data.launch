@@ -1,0 +1,21 @@
+<launch>
+    <arg name="data_dir" default = "/home/tcr/DataSets/calibra/calibra_data6" />
+    <!-- <arg name="data_dir" default = "/home/tcr/DataSets/calibra/calibra_data5" /> -->
+    <!-- <arg name="start_time" default = "0.10" /> -->
+    <arg name="start_time" default = "0" />
+    <arg name="end_time" default = "200" />
+    <!-- <arg name="play_mode" default = "autonomous" /> -->
+    <arg name="pointcloud_mode" default = "1" />
+
+    <node name="rgbd2pointcloud" pkg="rgbd2pointcloud" type="rgbd2pointcloud_from_data" output="screen">
+        <param name="data_dir" type="string" value="$(arg data_dir)"/>
+        <param name="start_time" type="double" value = "$(arg start_time)" />
+        <param name="end_time" type="double" value = "$(arg end_time)" />
+        <param name="pointcloud_mode" type="int" value = "$(arg pointcloud_mode)" />
+    </node>
+
+
+    <node name="path_visualisation" pkg="rviz" type="rviz" output="log" args="-d $(find rgbd2pointcloud)/config/pointcloud_visualisation.rviz" />
+</launch>
+
+
